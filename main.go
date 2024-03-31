@@ -50,34 +50,15 @@ func calcParallel(in int64, total int64) {
 
 	var syncEvery int64 = 100_000_000
 	parallelism := runtime.NumCPU()
-	inChannels := make([]chan int64, parallelism)
+	inC := make(chan int64, 1024)
 
 	for i := 0; i < parallelism; i++ {
-		inChannels[i] = make(chan int64, 1)
-		go func(inChannel chan int64) {
-			runtime.LockOSThread()
-			defer runtime.UnlockOSThread()
-			for {
-				var in int64 = 0
-				for i := int64(0); i < syncEvery; i++ {
-					x := rand.Float64()
-					y := rand.Float64()
-
-					xSquared := x * x
-					ySquared := y * y
-
-					if xSquared+ySquared <= 1 {
-						in++
-					}
-				}
-				inChannel <- in
-			}
-		}(inChannels[i])
+		go worker(syncEvery, inC)
 	}
 
 	for {
 		for i := 0; i < parallelism; i++ {
-			part := <-inChannels[i]
+			part := <-inC
 			in += part
 			runIn += part
 		}
@@ -103,6 +84,26 @@ func calcParallel(in int64, total int64) {
 		checkpointTime = time.Now()
 		checkpointPi = pi
 		checkpointTotal = total
+	}
+}
+
+func worker(syncEvery int64, inChannel chan<- int64) {
+	// runtime.LockOSThread()
+	// defer runtime.UnlockOSThread()
+	for {
+		var in int64 = 0
+		for i := int64(0); i < syncEvery; i++ {
+			x := rand.Float64()
+			y := rand.Float64()
+
+			xSquared := x * x
+			ySquared := y * y
+
+			if xSquared+ySquared <= 1 {
+				in++
+			}
+		}
+		inChannel <- in
 	}
 }
 
