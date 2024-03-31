@@ -81,7 +81,7 @@ func calcParallel(in int64, total int64) {
 		deltaPi.Abs(deltaPi)
 
 		fmt.Printf(
-			"time: %v, pi: %s, delta: %s, in/total (sum): %d/%d, in/total (this run): %d/%d iterations per sec: %sK\n",
+			"time: %v, pi: %s, delta: %s, in/total (sum): %d/%d, in/total (this run): %d/%d, iterations per sec: %sK\n",
 			time.Now().UTC().Format(timeFormat), pi.FloatString(30), deltaPi.FloatString(30), in, total, runIn, runTotal, throughput.FloatString(0),
 		)
 
