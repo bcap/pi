@@ -57,6 +57,8 @@ func calcParallel(in int64, total int64) {
 		go worker(syncEvery, inC)
 	}
 
+	timeFormat := "2006-01-02 15:04:05"
+
 	for {
 		for i := 0; i < parallelism; i++ {
 			part := <-inC
@@ -78,8 +80,8 @@ func calcParallel(in int64, total int64) {
 		deltaPi.Abs(deltaPi)
 
 		fmt.Printf(
-			"pi: %s, delta: %s, in/total (sum): %d/%d, in/total (this run): %d/%d iterations per sec: %sK\n",
-			pi.FloatString(30), deltaPi.FloatString(30), in, total, runIn, runTotal, throughput.FloatString(0),
+			"time: %v, pi: %s, delta: %s, in/total (sum): %d/%d, in/total (this run): %d/%d iterations per sec: %sK\n",
+			time.Now().UTC().Format(timeFormat), pi.FloatString(30), deltaPi.FloatString(30), in, total, runIn, runTotal, throughput.FloatString(0),
 		)
 
 		checkpointTime = time.Now()
