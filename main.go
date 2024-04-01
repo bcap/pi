@@ -31,6 +31,9 @@ var previousIterations = [][]int64{
 	{6023062174664, 7668800000000},
 }
 
+// Number of iterations each worker runs before sending results to main goroutine
+const syncEvery int64 = 1_000_000_000
+
 func main() {
 	in, total := sumPreviousIterations()
 	calcParallel(in, total)
@@ -51,7 +54,6 @@ func calcParallel(in int64, total int64) {
 	var checkpointTotal int64 = total
 	var checkpointTime = time.Now()
 
-	var syncEvery int64 = 100_000_000
 	parallelism := runtime.NumCPU()
 	inC := make(chan int64, 1024)
 
