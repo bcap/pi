@@ -35,7 +35,7 @@ var previousIterations = [][]int64{
 }
 
 // Number of iterations each worker runs before sending results to main goroutine
-const syncEvery int64 = 1_000_000_000
+const syncEvery int64 = 100_000_000
 
 func main() {
 	in, total := sumPreviousIterations()
