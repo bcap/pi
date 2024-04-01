@@ -32,6 +32,7 @@ var previousIterations = [][]int64{
 	{6023062174664, 7668800000000},
 	// 2024-04-01
 	{238761042972, 304000000000},
+	{1643681221795, 2092800000000},
 }
 
 // Number of iterations each worker runs before sending results to main goroutine
