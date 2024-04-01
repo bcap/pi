@@ -19,9 +19,10 @@ import (
 // Use the last log line of the previous run to capture the values.
 // NOTE: DO NOT USE the values in the "in/total (sum)". Use instead the values from "in/total (this run)" log line
 var previousIterations = [][]int64{
-	// 2024-03-31: long serial run when the algorithm was running on a single core
+	// 2024-03-31
+	//   long serial run when the algorithm was running on a single core
 	{321228337250, 409000000000},
-	// 2024-03-31: parallel runs
+	//   parallel runs
 	{4398286571, 5600000000},
 	{13194656076, 16800000000},
 	{16964658903, 21600000000},
@@ -29,6 +30,8 @@ var previousIterations = [][]int64{
 	{131318464019, 167200000000},
 	{69115044519, 88000000000},
 	{6023062174664, 7668800000000},
+	// 2024-04-01
+	{238761042972, 304000000000},
 }
 
 // Number of iterations each worker runs before sending results to main goroutine
